@@ -1,0 +1,10 @@
+export TF_RESOURCE_GROUP=rg-tfstate-sea
+export TF_STORAGE_ACCOUNT=stglabnctfstate
+
+# Microsoft Partner Network
+$env:TF_RESOURCE_GROUP="rg-tfstate-sea"
+$env:TF_STORAGE_ACCOUNT="stglabnctfstate"
+
+# KPW POC 100
+$env:TF_RESOURCE_GROUP="rg-tfstate-sea"
+$env:TF_STORAGE_ACCOUNT="stglabnctfdevsea"
