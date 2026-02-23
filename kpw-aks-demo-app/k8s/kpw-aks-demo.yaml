@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: kpw-aks-demo-app
+  namespace: ncd
   labels:
     app: kpw-aks-demo-app
 spec:
@@ -19,3 +20,17 @@ spec:
           image: ghcr.io/natthakritc/kpw-aks-trn-lab:latest
           ports:
             - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kpw-aks-demo-service
+  namespace: ncd
+spec:
+  selector:
+    app: kpw-aks-demo-app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: LoadBalancer
