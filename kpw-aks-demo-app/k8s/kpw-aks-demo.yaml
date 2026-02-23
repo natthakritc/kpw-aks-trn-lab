@@ -24,7 +24,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: kpw-aks-demo-service
+  name: kpw-aks-demo-app
   namespace: ncd
 spec:
   selector:
@@ -33,4 +33,50 @@ spec:
     - protocol: TCP
       port: 80
       targetPort: 80
-  type: LoadBalancer
+  type: ClusterIP #LoadBalancer #  
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: kpw-aks-demo-app
+  namespace: ncd
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: webapprouting.kubernetes.azure.com
+  rules:
+    - http:
+        paths:
+          - path: /poc
+            pathType: Prefix
+            backend:
+              service:
+                name: kpw-aks-demo-app
+                port:
+                  number: 80
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: kpw-aks-demo-app
+                port:
+                  number: 80
+
+# First version of Ingress, without path-based routing
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   name: kpw-aks-demo-app
+#   namespace: ncd
+# spec:
+#   ingressClassName: webapprouting.kubernetes.azure.com
+#   rules:
+#     - http:
+#         paths:
+#           - backend:
+#               service:
+#                 name: kpw-aks-demo-app
+#                 port:
+#                   number: 80
+#             path: /
+#             pathType: Prefix
